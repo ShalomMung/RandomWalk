@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 def main():
     N = 50
@@ -27,9 +28,26 @@ def main_vectorize(N=50, M=1): # jukselapp: choices = [(), (), (), ()]
     X[1:, :, :] = np.cumsum(R, axis=0)
 
     # Plotting
+    #fig, ax = plt.subplots()
+    #ax.plot(X[:, 0, :], X[:, 1, :])
+    #ax.plot([X[0, 0, 0]], [X[0, 1, 0]], "ro")
+    #plt.show()
+
+    # Animation
     fig, ax = plt.subplots()
-    ax.plot(X[:, 0, :], X[:, 1, :])
-    ax.plot([X[0, 0, 0]], [X[0, 1, 0]], "ro")
+    #ax.set_xlim(-N/2, N/2)
+    #ax.set_ylim(-N/2, N/2)
+    ax.set_xlim(np.min(X), np.max(X))
+    ax.set_ylim(np.min(X), np.max(X))
+    lines = ax.plot(X[:1, 0, :], X[:1, 1, :])
+    def func(i):
+        for k,line in enumerate(lines):
+            line.set_xdata(X[:i, 0, k])
+            line.set_ydata(X[:i, 1, k])
+    
+    frames = np.arange(N+1)
+    
+    ani = FuncAnimation(fig, func, frames)
     plt.show()
 
 if __name__ == "__main__":
