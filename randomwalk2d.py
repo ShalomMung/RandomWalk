@@ -20,18 +20,18 @@ def main():
     ax[1].plot([X[0, 0]], [X[0, 1]], "ro")
     plt.show()
 
-def main_vectorize(N=50): # jukselapp: choices = [(), (), (), ()]
-    X = np.zeros((N+1, 2))
-    X[0, :] = 0
-    R = 2 * np.random.randint(0, 2, size=(N, 2)) -1
-    X[1:, :] = np.cumsum(R, axis=0)
+def main_vectorize(N=50, M=1): # jukselapp: choices = [(), (), (), ()]
+    X = np.zeros((N+1, 2, M))
+    X[0, :, :] = 0
+    R = 2 * np.random.randint(0, 2, size=(N, 2, M)) -1
+    X[1:, :, :] = np.cumsum(R, axis=0)
 
     # Plotting
     fig, ax = plt.subplots()
-    ax.plot(X[:, 0], X[:, 1])
-    ax.plot([X[0, 0]], [X[0, 1]], "ro")
+    ax.plot(X[:, 0, :], X[:, 1, :])
+    ax.plot([X[0, 0, 0]], [X[0, 1, 0]], "ro")
     plt.show()
 
 if __name__ == "__main__":
     #main()
-    main_vectorize(N=200)
+    main_vectorize(N=200, M=100)
